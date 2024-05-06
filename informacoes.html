@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informações e Estatísticas - ZERO DENGUE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Informações e Estatísticas</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="denuncias.html">Denunciar</a></li>
+                <li><a href="informacoes.html">Informações</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="info-section">
+        <h2>Sobre a Dengue</h2>
+        <p>A dengue é uma doença transmitida pelo mosquito Aedes aegypti. Os sintomas incluem febre alta, dores de cabeça, dores nas articulações e manchas vermelhas na pele.</p>
+        <h3>Precauções e Prevenção</h3>
+        <ul>
+            <li>Evitar água parada, onde os mosquitos podem se reproduzir.</li>
+            <li>Usar repelente regularmente.</li>
+            <li>Instalar telas em janelas e portas para evitar a entrada de mosquitos.</li>
+        </ul>
+    </section>
+
+    <section id="stats-section">
+        <h2>Estatísticas de Denúncias</h2>
+        <p>Dados atualizados sobre denúncias de focos de dengue nas diferentes macro regiões:</p>
+        <!-- O conteúdo estatístico será gerado dinamicamente por um script PHP -->
+    </section>
+
+    <script>
+        fetch('get_stats.php')
+        .then(response => response.json())
+        .then(data => {
+            const statsDiv = document.getElementById('stats-section');
+            data.forEach(stat => {
+                statsDiv.innerHTML += `<p>${stat.macro_regiao}: ${stat.total} denúncias</p>`;
+            });
+        })
+        .catch(error => console.error('Erro ao buscar estatísticas:', error));
+    </script>
+    
+
+    <footer>
+        <p>© 2024 ZERO DENGUE. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Denúncias - ZERO DENGUE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Registro de Denúncias</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="denuncias.html">Denunciar</a></li>
+                <li><a href="informacoes.html">Informações</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="form-section">
+        <h2>Denuncie um foco de dengue</h2>
+        <form action="submit_denuncia.php" method="POST" enctype="multipart/form-data">
+            <div>
+                <label for="cep">CEP:</label>
+                <input type="text" id="cep" name="cep" required>
+            </div>
+            <div>
+                <label for="logradouro">Logradouro:</label>
+                <input type="text" id="logradouro" name="logradouro" required>
+            </div>
+            <div>
+                <label for="bairro">Bairro:</label>
+                <input type="text" id="bairro" name="bairro" required>
+            </div>
+            <div>
+                <label for="cidade">Cidade:</label>
+                <input type="text" id="cidade" name="cidade" required>
+            </div>
+            <div>
+                <label for="estado">Estado:</label>
+                <input type="text" id="estado" name="estado" required>
+            </div>
+            
+            <div>
+                <label for="macro_regiao">Macro Região:</label>
+                <select id="macro_regiao" name="macro_regiao">
+                    <option value="Norte">Norte</option>
+                    <option value="Sul">Sul</option>
+                    <option value="Leste">Leste</option>
+                    <option value="Oeste">Oeste</option>
+                </select>
+            </div>
+            <button type="submit">Enviar Denúncia</button>
+        </form>
+    </section>
+
+    <script>
+        function buscaCEP() {
+            var cep = document.getElementById('cep').value;
+        
+            if (cep.length !== 8) {
+                alert("O CEP deve ter 8 dígitos.");
+                return;
+            }
+        
+            var url = `https://viacep.com.br/ws/${cep}/json/`;
+        
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.erro) {
+                    alert("CEP não encontrado.");
+                    return;
+                }
+        
+                // Preenche os campos no formulário com os dados retornados
+                document.getElementById('logradouro').value = data.logradouro;
+                document.getElementById('bairro').value = data.bairro;
+                document.getElementById('cidade').value = data.localidade;
+                document.getElementById('estado').value = data.uf;
+            })
+            .catch(error => {
+                alert("Houve um erro na busca do CEP.");
+                console.error(error);
+            });
+        }
+        
+        // Adiciona um evento para buscar o CEP quando o usuário terminar de digitar
+        document.getElementById('cep').addEventListener('blur', buscaCEP);
+        </script>
+        
+
+    <footer>
+        <p>© 2024 ZERO DENGUE. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
